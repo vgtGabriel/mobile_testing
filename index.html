@@ -32,7 +32,7 @@
     </style>
   </head>
   <body>
-    <!-- <button onclick="showKeyboard()">Ativar Teclado</button> -->
+    <button onclick="showKeyboard()">Ativar Teclado</button>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -49,10 +49,17 @@
       </div>
     </div>
     <div class="keyboard-content" id="keyboardContent">
-        <!-- " -->
-        <input type="text" id="input1" name="Text Box" oninput="sendMsg()" onblur="hideKeyboard()">
+        <form onsubmit="hideKeyboard(); return false;">
+            <input type="text" id="input1" name="Text Box" oninput="sendMsg()">
+        </form>
     </div>
     <script>
+         var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
         var MyGameInstance;
         var keyboardContent = document.getElementById('keyboardContent');
         var inputElement = document.getElementById('input1');
@@ -63,6 +70,7 @@
         }
         function hideKeyboard() {
             keyboardContent.style.display = "none";
+            canvas.focus();
         }
         function sendMsg(){
             MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
@@ -70,13 +78,6 @@
         window.addEventListener('resize', function(){
             keyboardContent.style.height = window.innerHeight + 'px';
         });
-
-      var container = document.querySelector("#unity-container");
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      var warningBanner = document.querySelector("#unity-warning");
 
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
