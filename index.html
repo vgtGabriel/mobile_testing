@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Your Web Page</title>
+    <title>Test</title>
     <style>
         body {
             display: flex;
@@ -13,30 +13,37 @@
             overflow: hidden; /* Hide the scroll bar */
         }
 
-        .form-container {
+        .keyboard-content {
+            width: 100%;
             text-align: center;
             margin-bottom: auto;
+            background-color: rgba(0, 0, 0, 0.075);
         }
 
-        button {
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
+        input {
+            width: 100%;
+            margin-top: 10px;
+            height: 30px; /* Adjust the height as needed */
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <!-- Your content goes here -->
+    <div class="keyboard-content" id="keyboardContent">
+        <button onclick="showKeyboard()">Ativar Teclado</button>
+        <input type="text" id="input1" name="input1">
     </div>
-    
-    <button onclick="showKeyboard()">Ativar Teclado</button>
 
     <script>
         function showKeyboard() {
-            var buttonElement = document.querySelector('button');
-            buttonElement.focus();
+            var inputElement = document.getElementById('input1');
+            inputElement.focus();
         }
+
+        // Adjust keyboard-content height when the keyboard is opened
+        window.addEventListener('resize', function(){
+            var keyboardContent = document.getElementById('keyboardContent');
+            keyboardContent.style.height = window.innerHeight - keyboardContent.offsetTop + 'px';
+        });
     </script>
 </body>
 </html>
