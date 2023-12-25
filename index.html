@@ -7,32 +7,59 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <style>
+      body {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100vh; /* Ocupa 100% da altura da viewport */
+    margin: 0; /* Removendo margens padrão */
+}
         .keyboard-content {
-            margin: 0;
             width: 100%;
             text-align: center;
-            display: none;
-            flex-direction: column;
+            display: flex;
+            flex-direction: row;
             justify-content: flex-end;
-            align-self: flex-end; /* Adicionado para alinhar na parte inferior */
-            position: absolute; /* Adicionado para fixar na parte inferior */
-            bottom: 0; /* Adicionado para fixar na parte inferior */
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         input {
-            width: 100%; /* Ajustado para não ocupar toda a largura */
             margin-top: 10px;
             height: 30px;
+            box-sizing: border-box;
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 14px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         button {
-            margin-top: 10px;
-            align-self: flex-start;
+        margin-top: 10px;
+        margin-left: 5px;
+        padding: 8px 15px;
+        background-color: #ccc; /* Alterado para cinza */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #999; /* Alterado para um tom mais escuro ao passar o mouse */
+    }
+        img {
+            width: 16px; /* Ajuste o tamanho conforme necessário */
+            height: 16px;
         }
     </style>
   </head>
   <body>
-    <button onclick="showKeyboard()">Ativar Teclado</button>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -48,11 +75,15 @@
         <div id="unity-build-title">testings</div>
       </div>
     </div>
-    <div class="keyboard-content" id="keyboardContent">
-        <form onsubmit="hideKeyboard(); return false;">
-            <input type="text" id="input1" name="Text Box" oninput="sendMsg()">
-        </form>
-    </div>
+    <button onclick="showKeyboard()">
+      Ativar Teclado
+  </button>
+  <div class="keyboard-content" id="keyboardContent">
+      <input type="text" id="input1" name="Text Box" onblur="hideKeyboard()" oninput="sendMsg()">
+      <button type="submit" onclick="sendMsg()">
+          <img src="send.svg" alt="Enviar">
+      </button>
+  </div>
     <script>
          var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
