@@ -49,8 +49,8 @@
       </div>
     </div>
     <div class="keyboard-content" id="keyboardContent">
-        <!-- onblur="hideKeyboard()" -->
-        <input type="text" id="input1" name="Text Box"  oninput="sendMsg()">
+        <!-- " -->
+        <input type="text" id="input1" name="Text Box" oninput="sendMsg()" onblur="hideKeyboard()">
     </div>
     <script>
         var MyGameInstance;
@@ -66,7 +66,6 @@
         }
         function sendMsg(){
             MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
-            hideKeyboard();
         }
         window.addEventListener('resize', function(){
             keyboardContent.style.height = window.innerHeight + 'px';
