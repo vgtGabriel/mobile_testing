@@ -19,7 +19,7 @@
         .keyboard-content {
             width: 100%;
             text-align: center;
-            display: flex;
+            display: none;
             flex-direction: row;
             justify-content: flex-end;
             align-items: center;
@@ -75,12 +75,13 @@
         <div id="unity-build-title">testings</div>
       </div>
     </div>
-    <button onclick="showKeyboard()">
+    <!-- <button onclick="showKeyboard()">
       Ativar Teclado
-  </button>
+  </button> -->
   <div class="keyboard-content" id="keyboardContent">
+    <form onsubmit="hideKeyboard()">
       <input type="text" id="input1" name="Text Box" onblur="hideKeyboard()" oninput="sendMsg()">
-      <button type="submit" onclick="sendMsg()">
+      <button type="submit">
           <img src="send.svg" alt="Enviar">
       </button>
   </div>
