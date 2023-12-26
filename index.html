@@ -22,7 +22,7 @@
         .keyboard-content {
             width: 100%;
             text-align: center;
-            display: none;
+            display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: flex-end; 
@@ -74,7 +74,7 @@
         </div>
     </div>
     <div class="keyboard-content" id="keyboardContent">
-        <form onsubmit="handleFormSubmission(); return false;">
+        <form onsubmit="handleFormSubmission();">
             <input type="text" id="input1" name="Text Box" onblur="hideKeyboard();" oninput="sendMsg();">
             <input id="input-submit" type="submit"></input>
         </form>
@@ -104,7 +104,7 @@
             canvas.focus();
         }
         function sendMsg(){
-            // MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
+            MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
         }
         window.addEventListener('resize', function(){
             keyboardContent.style.height = window.innerHeight + 'px';
