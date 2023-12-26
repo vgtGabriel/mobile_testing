@@ -76,10 +76,10 @@
     </div>
   </div>
   <div class="keyboard-content" id="keyboardContent">
-    <form onsubmit="handleFormSubmission()">
-      <input type="text" id="input1" name="Text Box" onblur="hideKeyboard();" oninput="sendMsg();">
-      <input id="input-submit" type="submit"></input>
-    </form>
+    <input type="text" id="input1" name="Text Box" onblur="hideKeyboard();" oninput="sendMsg();">
+    <!--<form onsubmit="handleFormSubmission()">
+       <input id="input-submit" type="submit"></input> 
+    </form>-->
   </div>
 
   <div id="unity-fullscreen-button" style="display: none"></div>
@@ -91,7 +91,6 @@
 
     function handleFormSubmission() {
         hideKeyboard();
-        return false;
     }
 
     window.showKeyboard= function(type,show) {
@@ -99,10 +98,12 @@
         inputElement.type = type;
         keyboardContent.style.display = "flex";
         if(show){
-          inputElement.style.visibility = "visible";
+          inputElement.style.position = "relative";
+          inputElement.style.left = "0";
         }
         else{
-          inputElement.style.visibility = "hidden";
+          inputElement.style.position = "absolute";
+          inputElement.style.left = "-9999px";  
         }
         inputElement.focus();
     }
