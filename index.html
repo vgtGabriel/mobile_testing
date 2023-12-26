@@ -22,17 +22,18 @@
     }
 
     .keyboard-content {
-      width: 100%;
-      text-align: center;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-end;
-      margin-bottom: 10px;
-      position: absolute;
-      bottom: 0;
-    }
-
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    position: absolute; /* Mantenha essa linha se deseja que o .keyboard-content seja sobreposto ao canvas */
+    bottom: 0;
+    z-index: 999; /* Adicione essa linha com um valor alto para garantir que esteja à frente do canvas */
+  }
     input {
       margin-top: 10px;
       height: 30px;
@@ -61,7 +62,6 @@
     }
   </style>
 </head>
-
 <body class="dark">
   <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas"></canvas>
@@ -77,49 +77,21 @@
   </div>
   <div id="unity-fullscreen-button" style="display: none"></div>
   <div class="keyboard-content" id="keyboardContent">
-    <input type="text" id="input1" name="Text Box" ontouchend="hideKeyboard();" oninput="sendMsg();">
+    <input type="text" id="input1" name="Text Box" onfocusout="hideKeyboard();" oninput="sendMsg();">
   </div>
   <script type="module">
     var MyGameInstance;
-    var keyboardContent;
-    var inputElement;
-
-    window.showKeyboard= function(type,show) {
-        console.log("showing");
-        inputElement.type = type;
-        keyboardContent.style.display = "flex";
-        if(show){
-          inputElement.style.position = "relative";
-          inputElement.style.left = "0";
-        }
-        else{
-          inputElement.style.position = "absolute";
-          inputElement.style.left = "-9999px";  
-        }
-        inputElement.focus();
-    }
-
-    window.hideKeyboard = function() {
-        console.log("here");
-        keyboardContent.style.display = "none";
-        // canvas.focus();
-    }
-
-    function sendMsg() {
-        MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
-    }
-
     const hideFullScreenButton = "";
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/mobile_testing.loader.js";
     const config = {
-        dataUrl: buildUrl + "/mobile_testing.data.unityweb",
-        frameworkUrl: buildUrl + "/mobile_testing.framework.js.unityweb",
-        codeUrl: buildUrl + "/mobile_testing.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "Vaizard Games",
-        productName: "Byron Games",
-        productVersion: "1.0.2",
+      dataUrl: buildUrl + "/mobile_testing.data.unityweb",
+      frameworkUrl: buildUrl + "/mobile_testing.framework.js.unityweb",
+      codeUrl: buildUrl + "/mobile_testing.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Vaizard Games",
+      productName: "Byron Games",
+      productVersion: "1.0.2",
     };
 
     const container = document.querySelector("#unity-container");
@@ -131,53 +103,75 @@
     const spinner = document.querySelector('.spinner');
 
     const canFullscreen = (function () {
-        for (const key of [
-            'exitFullscreen',
-            'webkitExitFullscreen',
-            'webkitCancelFullScreen',
-            'mozCancelFullScreen',
-            'msExitFullscreen',
-        ]) {
-            if (key in document) {
-                return true;
-            }
+      for (const key of [
+        'exitFullscreen',
+        'webkitExitFullscreen',
+        'webkitCancelFullScreen',
+        'mozCancelFullScreen',
+        'msExitFullscreen',
+      ]) {
+        if (key in document) {
+          return true;
         }
-        return false;
+      }
+      return false;
     }());
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        config.devicePixelRatio = 1;
+      container.className = "unity-mobile";
+      config.devicePixelRatio = 1;
     }
     loadingCover.style.display = "";
     const script = document.createElement("script");
     script.src = loaderUrl;
     script.onload = () => {
-        keyboardContent = document.getElementById('keyboardContent');
-        inputElement = document.getElementById('input1');
-
-        import('./lib/thirdweb-unity-bridge.js').then(module => {
-            createUnityInstance(canvas, config, (progress) => {
-                spinner.style.display = "none";
-                progressBarEmpty.style.display = "";
-                progressBarFull.style.width = `${100 * progress}%`;
-            }).then((unityInstance) => {
-                MyGameInstance = unityInstance;
-                loadingCover.style.display = "none";
-                if (canFullscreen) {
-                    if (!hideFullScreenButton) {
-                        fullscreenButton.style.display = "";
-                    }
-                    fullscreenButton.onclick = () => {
-                        unityInstance.SetFullscreen(1);
-                    };
-                }
-            }).catch((message) => {
-                alert(message);
-            });
+      import('./lib/thirdweb-unity-bridge.js').then(module => {
+        createUnityInstance(canvas, config, (progress) => {
+          spinner.style.display = "none";
+          progressBarEmpty.style.display = "";
+          progressBarFull.style.width = `${100 * progress}%`;
+        }).then((unityInstance) => {
+          MyGameInstance = unityInstance;
+          loadingCover.style.display = "none";
+          if (canFullscreen) {
+            if (!hideFullScreenButton) {
+              fullscreenButton.style.display = "";
+            }
+            fullscreenButton.onclick = () => {
+              unityInstance.SetFullscreen(1);
+            };
+          }
+        }).catch((message) => {
+          alert(message);
         });
+      });
     };
     document.body.appendChild(script);
-</script>
+  </script>
+  <script>
+    var keyboardContent= document.getElementById('keyboardContent');
+    var inputElement= document.getElementById('input1');
+    function showKeyboard(type, show) {
+      console.log("showing");
+      inputElement.type = type;
+      keyboardContent.style.display = "flex";
+      if (show) {
+        inputElement.style.position = "relative";
+        inputElement.style.left = "0";
+      }
+      else {
+        inputElement.style.position = "absolute";
+        inputElement.style.left = "-9999px";
+      }
+      inputElement.focus();
+    }
+
+    function hideKeyboard() {
+      keyboardContent.style.display = "none";
+    }
+    function sendMsg() {
+      window.MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
+    }
+  </script>
 </body>
 </html>
