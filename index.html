@@ -75,23 +75,14 @@
       <div class="spinner"></div>
     </div>
   </div>
-  <div class="keyboard-content" id="keyboardContent">
-    <input type="text" id="input1" name="Text Box" onblur="hideKeyboard();" oninput="sendMsg();">
-    <!--<form onsubmit="handleFormSubmission()">
-       <input id="input-submit" type="submit"></input> 
-    </form>-->
-  </div>
-
   <div id="unity-fullscreen-button" style="display: none"></div>
+  <div class="keyboard-content" id="keyboardContent">
+    <input type="text" id="input1" name="Text Box" ontouchend="hideKeyboard();" oninput="sendMsg();">
+  </div>
   <script type="module">
-
     var MyGameInstance;
     var keyboardContent;
     var inputElement;
-
-    function handleFormSubmission() {
-        hideKeyboard();
-    }
 
     window.showKeyboard= function(type,show) {
         console.log("showing");
