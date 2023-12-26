@@ -97,14 +97,13 @@
     window.showKeyboard= function(type,show) {
         console.log("showing");
         inputElement.type = type;
+        keyboardContent.style.display = "flex";
         if(show){
-          keyboardContent.style.display = "flex";
-          // inputElement.style.display = "flex";
+          keyboardContent.style.visibility = "visible";
         }
         else{
-          keyboardContent.style.display = "none";
+          keyboardContent.style.visibility = "hidden";
         }
-          // inputElement.style.display = "none";
         inputElement.focus();
     }
 
