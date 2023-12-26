@@ -98,9 +98,12 @@
       inputElement.focus();
     }
     window.hideKeyboard = function() {
+      inputElement.value = "";
       keyboardContent.style.display = "none";
+      canvas.focus();
     }
     window.sendMsg = function() {
+      console.log("send");
       MyGameInstance.SendMessage('KeyboardManager', 'SetTextOnWeb', inputElement.value);
     }
     const hideFullScreenButton = "";
