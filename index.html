@@ -76,7 +76,7 @@
     <div class="keyboard-content" id="keyboardContent">
         <form onsubmit="hideKeyboard(); return false;">
             <input type="text" id="input1" name="Text Box" onblur="hideKeyboard();" oninput="sendMsg();">
-            <input id="input-submit" type="submit"></input>
+            <!-- <input id="input-submit" type="submit"></input> -->
         </form>
     </div>
     <script>
@@ -95,11 +95,12 @@
             inputElement.focus();
         }
         function hideKeyboard() {
+          console.log("here");
             keyboardContent.style.display = "none";
             canvas.focus();
         }
         function sendMsg(){
-            MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
+            // MyGameInstance.SendMessage('---mainCamera---', 'SetTextOnWeb', inputElement.value);
         }
         window.addEventListener('resize', function(){
             keyboardContent.style.height = window.innerHeight + 'px';
