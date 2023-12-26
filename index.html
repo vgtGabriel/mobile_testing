@@ -94,16 +94,17 @@
         return false;
     }
 
-    function showKeyboard(type,show) {
+    window.showKeyboard= function(type,show) {
         console.log("showing");
-        keyboardContent.style.display = "flex";
         inputElement.type = type;
         if(show){
-          inputElement.style.display = "flex";
+          keyboardContent.style.display = "flex";
+          // inputElement.style.display = "flex";
         }
         else{
-          inputElement.style.display = "none";
+          keyboardContent.style.display = "none";
         }
+          // inputElement.style.display = "none";
         inputElement.focus();
     }
 
