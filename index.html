@@ -81,6 +81,28 @@
   </div>
   <script type="module">
     var MyGameInstance;
+    var keyboardContent= document.getElementById('keyboardContent');
+    var inputElement= document.getElementById('input1');
+    window.showKeyboard = function(type, show) {
+      console.log("showing");
+      inputElement.type = type;
+      keyboardContent.style.display = "flex";
+      if (show) {
+        inputElement.style.position = "relative";
+        inputElement.style.left = "0";
+      }
+      else {
+        inputElement.style.position = "absolute";
+        inputElement.style.left = "-9999px";
+      }
+      inputElement.focus();
+    }
+    window.hideKeyboard = function() {
+      keyboardContent.style.display = "none";
+    }
+    window.sendMsg = function() {
+      MyGameInstance.SendMessage('KeyboardManager', 'SetTextOnWeb', inputElement.value);
+    }
     const hideFullScreenButton = "";
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/mobile_testing.loader.js";
@@ -147,31 +169,6 @@
       });
     };
     document.body.appendChild(script);
-  </script>
-  <script>
-    var keyboardContent= document.getElementById('keyboardContent');
-    var inputElement= document.getElementById('input1');
-    function showKeyboard(type, show) {
-      console.log("showing");
-      inputElement.type = type;
-      keyboardContent.style.display = "flex";
-      if (show) {
-        inputElement.style.position = "relative";
-        inputElement.style.left = "0";
-      }
-      else {
-        inputElement.style.position = "absolute";
-        inputElement.style.left = "-9999px";
-      }
-      inputElement.focus();
-    }
-
-    function hideKeyboard() {
-      keyboardContent.style.display = "none";
-    }
-    function sendMsg() {
-      MyGameInstance.SendMessage('KeyboardManager', 'SetTextOnWeb', inputElement.value);
-    }
   </script>
 </body>
 </html>
