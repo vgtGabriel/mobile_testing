@@ -170,7 +170,7 @@
       keyboardContent.style.display = "none";
     }
     function sendMsg() {
-      window.MyGameInstance.SendMessage('KeyboardManager', 'SetTextOnWeb', inputElement.value);
+      MyGameInstance.SendMessage('KeyboardManager', 'SetTextOnWeb', inputElement.value);
     }
   </script>
 </body>
