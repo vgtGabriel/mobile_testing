@@ -56,7 +56,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     #input-submit:hover {
       background-color: #999;
     }
@@ -84,7 +83,6 @@
     var keyboardContent= document.getElementById('keyboardContent');
     var inputElement= document.getElementById('input1');
     window.showKeyboard = function(type, show) {
-      console.log("showing");
       inputElement.type = type;
       keyboardContent.style.display = "flex";
       if (show) {
@@ -103,7 +101,6 @@
       canvas.focus();
     }
     window.sendMsg = function() {
-      console.log("send");
       MyGameInstance.SendMessage('KeyboardManager', 'SetTextOnWeb', inputElement.value);
     }
     const hideFullScreenButton = "";
